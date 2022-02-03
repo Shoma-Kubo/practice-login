@@ -1,29 +1,26 @@
 package practice.login.domain.user
 
-import practice.login.utility.Utils.toBase64URLSafeString
-import java.util.*
-
 data class UserEntity private constructor(
-  val id: String,
-  val accountName: String,
-  val password: String,
+  val id: UserId,
+  val accountName: UserAccountName,
+  val password: UserPassword,
 ) {
 
   companion object {
 
     fun new(
-      accountName: String,
-      password: String
+      accountName: UserAccountName,
+      password: UserPassword
     ) = UserEntity(
-      id = UUID.randomUUID().toBase64URLSafeString(),
+      id = UserId.new(),
       accountName = accountName,
       password = password,
     )
 
     fun of(
-      id: String,
-      accountName: String,
-      password: String
+      id: UserId,
+      accountName: UserAccountName,
+      password: UserPassword
     ) = UserEntity(
       id = id,
       accountName = accountName,

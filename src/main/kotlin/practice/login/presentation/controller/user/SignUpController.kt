@@ -7,23 +7,23 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import practice.login.application.user.SignUpService
+import practice.login.application.user.SignUpUseCase
 import practice.login.presentation.requestBody.RequestBodySignUp
 import practice.login.presentation.responseBody.ResponseBodyUser
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/signup")
+@RequestMapping("/sign_up")
 @Validated
 class SignUpController(
-  private val signUpService: SignUpService
+  private val signUpUseCase: SignUpUseCase
 ) {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  fun create(
+  fun signUp(
     @Valid @RequestBody requestBodySignUp: RequestBodySignUp
-  ): ResponseBodyUser = signUpService.create(
+  ): ResponseBodyUser = signUpUseCase.signUp(
     requestBodySignUp = requestBodySignUp
   )
 }

@@ -11,7 +11,7 @@ PRIMARY KEY (`id`)
 DROP TABLE IF EXISTS `session_ids`;
 CREATE TABLE `session_ids` (
 `session_id` varchar(22) NOT NULL,
-`account_name` varchar(16) NOT NULL,
+`user_id` varchar(22) NOT NULL,
 `expire_at` datetime NOT NULL,
 `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

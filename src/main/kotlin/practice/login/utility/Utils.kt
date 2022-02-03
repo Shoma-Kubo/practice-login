@@ -2,6 +2,8 @@ package practice.login.utility
 
 import org.apache.commons.codec.binary.Base64
 import java.nio.ByteBuffer
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 object Utils {
@@ -13,9 +15,13 @@ object Utils {
     return Base64.encodeBase64URLSafeString(bb.array())
   }
 
+  fun LocalDateTime.toAge(): Long =
+    ChronoUnit.SECONDS.between(LocalDateTime.now(), this)
+
   fun <T> nullOnNotFound(lambda: () -> T): T? =
     try {
       lambda()
+      // TODO Exception -> NotFoundException
     } catch (_: Exception) {
       null
     }
