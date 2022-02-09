@@ -18,11 +18,10 @@ class SignInUseCase(
 ) {
 
   fun isSignedIn(
-    userId: UserId?
+    sessionId: SessionId?
   ): ResponseBodyIsSignedIn {
-
     return ResponseBodyIsSignedIn(
-      isSignedIn = userId != null
+      isSignedIn = sessionService.isSignedIn(sessionId) != null
     )
   }
 

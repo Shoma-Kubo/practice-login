@@ -9,6 +9,7 @@ import practice.login.domain.session.SessionIdEntity
 import practice.login.domain.session.SessionIdRepository
 import practice.login.domain.user.UserId
 import practice.login.utility.Utils
+import practice.login.utility.Utils.nullOnNotFound
 import practice.login.utility.Utils.toAge
 import javax.servlet.http.HttpServletResponse
 
@@ -18,8 +19,20 @@ class SessionService(
   private val cookieService: CookieService
 ) {
 
+  fun isSignedIn(
+    sessionId: SessionId?
+  ): UserId? =
+    sessionId?.let {
+      nullOnNotFound {
+        sessionIdRepository.findBySessionId(sessionId)
+      }?.let { sessionIdEntity ->
+        if (!sessionIdEntity.expireAt.hasExpired()) sessionIdEntity.userId
+        else null
+      }
+    }
+
   fun SessionId.isValid(): Boolean =
-    Utils.nullOnNotFound {
+    nullOnNotFound {
       sessionIdRepository.findBySessionId(this)
     }?.let { sessionIdEntity ->
       !sessionIdEntity.expireAt.hasExpired()

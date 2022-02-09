@@ -27,6 +27,8 @@ class SessionFilter(
     chain: FilterChain
   ) {
 
+    chain.doFilter(request, response)
+
     val httpRequest = request as HttpServletRequest
     val cookies = httpRequest.cookies
 
@@ -45,9 +47,5 @@ class SessionFilter(
         )
       }?.userId
     }
-
-    // request.parameterMap[UserConst.PARAMETER_USER_ID_NAME] = arrayOf(userId?.value)
-
-    chain.doFilter(request, response)
   }
 }
