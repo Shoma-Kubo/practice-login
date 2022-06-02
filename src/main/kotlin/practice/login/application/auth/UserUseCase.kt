@@ -1,4 +1,4 @@
-package practice.login.application.user
+package practice.login.application.auth
 
 import org.springframework.stereotype.Service
 import practice.login.domain.user.UserAccountName

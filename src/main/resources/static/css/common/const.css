@@ -1,0 +1,50 @@
+:root {
+  /* Shape */
+  --heightHeader: 60px;
+
+  /* Style */
+  --marginTableColumn: 20px;
+  --marginTableRow: 20px;
+  --marginButtonTop: 40px;
+
+  /* Color */
+  --colorWhite: #cfcfcf;
+  --colorRed: #ff2222;
+  --colorYellow: #dddd00;
+  --colorBlack: #111111;
+  --colorDarkGray: #22222c;
+  --colorGray: #555555;
+  --colorLightGray: #888888;
+
+  --colorHeaderBackground: var(--colorBlack);
+  --colorBodyBackground: var(--colorDarkGray);
+  --colorFooterBackground: var(--colorGray);
+
+  --colorTextNormal: var(--colorWhite);
+  --colorTextAlert: var(--colorRed);
+  --colorTextValidationError: var(--colorRed);
+  --colorTextFormExplanation: var(--colorWhite);
+  --colorAccountName: var(--colorLightGray);
+
+  /* Font */
+  --fontHeaderTitleSize: 30px;
+  --fontBodySize: 20px;
+  --fontButtonSize: 15px;
+  --fontFormFieldSize: 15px;
+  --fontFormExplanationSize: 12px;
+  --fontValidationErrorSize: 15px;
+
+  --fontErrorStatusCodeSize: 100px;
+  --fontErrorTextSize: 30px;
+
+  --fontHeaderTitleTextWeight: 400;
+  --fontBodyTextWeight: 400;
+  --fontErrorStatusCodeWeight: 600;
+
+  --fontHeaderTitleFamily: 'Baloo Bhaina 2', cursive;
+  --fontBodyFamily: 'M PLUS Rounded 1c', sans-serif;
+  --fontButtonFamily: var(--fontBodyFamily);
+
+  /* Transition */
+  --transitionButtonDuration: 0.3s;
+ }

@@ -6,8 +6,8 @@ import org.seasar.doma.Id
 import org.seasar.doma.Table
 import practice.login.domain.user.UserAccountName
 import practice.login.domain.user.UserEntity
+import practice.login.domain.user.UserHashedPassword
 import practice.login.domain.user.UserId
-import practice.login.domain.user.UserPassword
 
 @Entity(immutable = true)
 @Table(name = "users")
@@ -18,7 +18,7 @@ data class UserRecord(
   @Column(name = "account_name")
   val accountName: UserAccountName,
   @Column(name = "password")
-  val password: UserPassword
+  val hashedPassword: UserHashedPassword
 ) {
 
   companion object {
@@ -28,13 +28,13 @@ data class UserRecord(
     ) = UserRecord(
       id = user.id,
       accountName = user.accountName,
-      password = user.password
+      hashedPassword = user.hashedPassword
     )
   }
 
   fun toEntity() = UserEntity.of(
     id = id,
     accountName = accountName,
-    password = password
+    hashedPassword = hashedPassword
   )
 }

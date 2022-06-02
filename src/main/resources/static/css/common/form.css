@@ -1,0 +1,44 @@
+/* Layout */
+.form > * {
+  margin: 0 auto;
+}
+
+/* Text */
+.form .explanation {
+  color: var(--colorTextFormExplanation);
+  font-size: var(--fontFormExplanationSize);
+}
+.form p.validationError {
+  font-size: var(--fontValidationErrorSize);
+  color: var(--colorTextValidationError);
+}
+.form p.error {
+  margin-top: 1em;
+
+  text-align: center;
+  font-size: var(--fontBodySize);
+  color: var(--colorTextValidationError);
+}
+
+/* Fields */
+.form input.text, .form textarea {
+  padding: 0.3em;
+  background-color: var(--colorBodyBackground);
+  border: 1px solid var(--colorTextNormal);
+
+  font-size: var(--fontFormFieldSize);
+  color: var(--colorTextNormal);
+}
+.form input.text {
+  width: 15em;
+}
+.form textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+.form input.text:focus, .form textarea:focus {
+  border-color: var(--colorYellow);
+}
+.form input.text.error, .form textarea.error {
+  border-color: var(--colorTextAlert);
+}

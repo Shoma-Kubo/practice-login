@@ -1,0 +1,82 @@
+/* Button */
+a.button {
+  text-decoration: none;
+  text-align: center;
+}
+.button {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box; /* Include border in the width and height */
+
+  display: block;
+
+  padding: 0.5em 0;
+  border: 2px solid var(--colorTextNormal);
+  background: transparent;
+
+  color: var(--colorTextNormal);
+  font: var(--fontBodyTextWeight) var(--fontButtonSize) var(--fontButtonFamily);
+
+  cursor : pointer;
+  transition-duration: var(--transitionButtonDuration);
+}
+.button[style="alert"] {
+  border-color: var(--colorTextAlert);
+  color: var(--colorTextAlert);
+}
+.content .button {
+  margin: var(--marginButtonTop) auto 0 auto;
+}
+
+/* Button Hover */
+.button:hover {
+  color: var(--colorBodyBackground);
+}
+
+/* Button Back */
+.buttonBack {
+  position: relative;
+  width: 10em;
+
+  margin: 0 auto;
+
+  font-size: var(--fontButtonSize);
+}
+.buttonBack::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+
+  content: '';
+
+  transform-origin: right top;
+  transform: scale(0, 1);
+  transition: transform var(--transitionButtonDuration);
+}
+.buttonBack[style="normal"]::before {
+  background: var(--colorTextNormal);
+}
+.buttonBack[style="alert"]::before {
+  background: var(--colorTextAlert);
+}
+
+/* Button Back Hover */
+.buttonBack:hover::before {
+  transform-origin: left top;
+  transform: scale(1, 1);
+}
+
+/* Buttons */
+.buttons {
+  list-style-type: none;
+  text-align: center;
+}
+.buttons li {
+  display: inline-block;
+}
+.buttons li:not(:first-child) {
+  margin-left: 1em;
+}

@@ -3,28 +3,28 @@ package practice.login.domain.user
 data class UserEntity private constructor(
   val id: UserId,
   val accountName: UserAccountName,
-  val password: UserPassword,
+  val hashedPassword: UserHashedPassword,
 ) {
 
   companion object {
 
     fun new(
       accountName: UserAccountName,
-      password: UserPassword
+      hashedPassword: UserHashedPassword
     ) = UserEntity(
       id = UserId.new(),
       accountName = accountName,
-      password = password,
+      hashedPassword = hashedPassword,
     )
 
     fun of(
       id: UserId,
       accountName: UserAccountName,
-      password: UserPassword
+      hashedPassword: UserHashedPassword
     ) = UserEntity(
       id = id,
       accountName = accountName,
-      password = password
+      hashedPassword = hashedPassword
     )
   }
 }

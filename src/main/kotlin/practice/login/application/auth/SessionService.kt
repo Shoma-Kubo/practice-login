@@ -1,4 +1,4 @@
-package practice.login.application.user
+package practice.login.application.auth
 
 import org.springframework.http.ResponseCookie
 import org.springframework.stereotype.Service
@@ -8,7 +8,6 @@ import practice.login.domain.session.SessionId
 import practice.login.domain.session.SessionIdEntity
 import practice.login.domain.session.SessionIdRepository
 import practice.login.domain.user.UserId
-import practice.login.utility.Utils
 import practice.login.utility.Utils.nullOnNotFound
 import practice.login.utility.Utils.toAge
 import javax.servlet.http.HttpServletResponse
@@ -38,47 +37,37 @@ class SessionService(
       !sessionIdEntity.expireAt.hasExpired()
     } ?: false
 
-  fun upsertSessionId(
-    response: HttpServletResponse,
-    sessionId: SessionId? = null,
-    userId: UserId? = null
-  ): SessionIdEntity? =
-    sessionId?.let {
-      Utils.nullOnNotFound {
-        sessionIdRepository.findBySessionId(sessionId)
-      }?.let { sessionIdEntity ->
-        sessionIdRepository.deleteByUserId(sessionIdEntity.userId)
-        setSessionId(
-          response = response,
-          userId = sessionIdEntity.userId
-        )
-      }
-    } ?: userId?.let { it ->
-      sessionIdRepository.deleteByUserId(it)
-      setSessionId(
-        response = response,
-        userId = it
-      )
-    } ?: throw Exception("Failed To Update")
-
-  fun setSessionId(
-    response: HttpServletResponse,
+  fun createSessionId(
     userId: UserId
-  ): SessionIdEntity {
+  ): SessionIdEntity =
+    sessionIdRepository.insert(
+      sessionIdEntity = SessionIdEntity.new(userId = userId)
+    )
 
-    val sessionIdEntity = SessionIdEntity.new(userId = userId)
-    sessionIdRepository.insert(sessionIdEntity = sessionIdEntity)
+  fun updateSessionId(
+    sessionId: SessionId,
+  ): SessionIdEntity? = nullOnNotFound {
+    sessionIdRepository.findBySessionId(sessionId)
+  }?.let { sessionIdEntity ->
+    sessionIdRepository.deleteByUserId(sessionIdEntity.userId)
+    val newSessionIdEntity: SessionIdEntity =
+      SessionIdEntity.new(userId = sessionIdEntity.userId)
+    sessionIdRepository.insert(newSessionIdEntity)
+  }
+
+  fun setSessionIdToResponse(
+    response: HttpServletResponse,
+    sessionIdEntity: SessionIdEntity
+  ): SessionIdEntity {
 
     val cookie: ResponseCookie.ResponseCookieBuilder =
       ResponseCookie
         .from(CookieConst.SESSION_ID_NAME, sessionIdEntity.sessionId.value)
         .maxAge(sessionIdEntity.expireAt.value.toAge())
-
     cookieService.addCookie(
       response,
       cookie
     )
-
     return sessionIdEntity
   }
 }

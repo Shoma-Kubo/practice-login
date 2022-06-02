@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="jp" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+
+<head>
+  <link th:href="@{/css/common/form.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/common/table.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<div class="content" layout:fragment="content">
+
+  <div class="title">
+    <h1 class="title">SIGN OUT</h1>
+  </div>
+
+  <div>
+    Signed out successful.
+  </div>
+
+  <form class="form" type="signUpComplete" method="get" th:action="@{/}">
+    <div class="buttonBack" style="normal">
+      <input class="button" type="submit" value="Top page">
+    </div>
+  </form>
+
+</div>
+
+</body>
+</html>
