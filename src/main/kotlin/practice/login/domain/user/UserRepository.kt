@@ -7,9 +7,4 @@ interface UserRepository {
   fun updateProfile(user: UserEntity): UserEntity
 
   fun findByAccountName(accountName: UserAccountName): UserEntity
-
-  fun findUserIdByAccountNameAndPassword(
-    accountName: UserAccountName,
-    password: UserPassword
-  ): UserId
 }

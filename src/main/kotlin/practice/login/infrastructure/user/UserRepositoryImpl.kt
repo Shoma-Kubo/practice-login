@@ -3,8 +3,6 @@ package practice.login.infrastructure.user
 import org.springframework.stereotype.Repository
 import practice.login.domain.user.UserAccountName
 import practice.login.domain.user.UserEntity
-import practice.login.domain.user.UserId
-import practice.login.domain.user.UserPassword
 import practice.login.domain.user.UserRepository
 
 @Repository
@@ -20,13 +18,4 @@ class UserRepositoryImpl(
 
   override fun findByAccountName(accountName: UserAccountName): UserEntity =
     userDao.findByAccountName(accountName)?.toEntity() ?: throw Exception("User Not Found")
-
-  override fun findUserIdByAccountNameAndPassword(
-    accountName: UserAccountName,
-    password: UserPassword
-  ): UserId =
-    userDao.findUserIdByAccountNameAndPassword(
-      accountName = accountName,
-      password = password
-    ) ?: throw Exception("User Not Found")
 }
