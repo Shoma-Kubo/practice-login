@@ -16,6 +16,10 @@
     <h1 class="title">TOP PAGE</h1>
   </div>
 
+  <div th:if="${is_signed_in}">
+    <h2 th:text="'Hello ' + ${account_name} + '!'"></h2>
+  </div>
+
 </div>
 
 </body>

@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.servlet.ModelAndView
 import practice.login.application.top.TopPageUseCase
+import practice.login.config.HttpAttributeConst
+import practice.login.domain.user.UserId
+import javax.servlet.http.HttpServletRequest
 
 @Controller
 @RequestMapping("/")
@@ -17,8 +20,10 @@ class TopPageController(
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   fun top(
-    modelAndView: ModelAndView
+    modelAndView: ModelAndView,
+    request: HttpServletRequest
   ): ModelAndView = topPageUseCase.top(
-    modelAndView = modelAndView
+    modelAndView = modelAndView,
+    userId = request.getAttribute(HttpAttributeConst.USER_ID_NAME)?.let { UserId.of(it.toString()) }
   )
 }

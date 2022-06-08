@@ -33,7 +33,7 @@ class JsonWebTokenService(
     refreshTokenEntity: RefreshTokenEntity
   ) {
 
-    val cookie = Cookie(CookieConst.AUTH_TOKEN_NAME, refreshTokenEntity.token.value)
+    val cookie = Cookie(CookieConst.REFRESH_TOKEN_NAME, refreshTokenEntity.token.value)
     cookie.maxAge = refreshTokenEntity.token.getExpireAt()?.value?.toAge() ?: 0
 
     cookieService.addCookie(

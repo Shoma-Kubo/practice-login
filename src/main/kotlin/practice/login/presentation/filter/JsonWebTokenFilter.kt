@@ -3,7 +3,6 @@ package practice.login.presentation.filter
 import org.springframework.stereotype.Component
 import practice.login.application.jsonWebToken.JsonWebTokenFilterService
 import practice.login.config.HttpAttributeConst
-import practice.login.domain.jsonWebToken.AuthTokenEntity
 import practice.login.domain.user.UserId
 import javax.servlet.Filter
 import javax.servlet.FilterChain
@@ -21,13 +20,8 @@ class JsonWebTokenFilter(
     chain: FilterChain
   ) {
 
-    val authTokenEntity: AuthTokenEntity? = jsonWebTokenFilterService.getAuthTokenFromRequest(request)
-    val userId: UserId? =
-      jsonWebTokenFilterService.getAuthTokenFromRequest(request)?.let { tokenEntity ->
-        if (tokenEntity.token.isValid()) tokenEntity.token.getUserId()
-        else null
-      }
-    request?.setAttribute(HttpAttributeConst.USER_ID_NAME, userId)
+    val userId: UserId? = jsonWebTokenFilterService.getUserIdOrNull(request)
+    request?.setAttribute(HttpAttributeConst.USER_ID_NAME, userId?.value)
 
     chain.doFilter(request, response)
   }

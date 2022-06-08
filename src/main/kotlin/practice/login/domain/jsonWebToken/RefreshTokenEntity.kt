@@ -27,7 +27,7 @@ data class RefreshTokenEntity(
           ),
           Pair(
             CookieConst.JSON_WEB_TOKEN_PAYLOAD_EXPIRE_AT,
-            JsonWebTokenExpireAt.new(1).toFormattedString()
+            JsonWebTokenExpireAt.new(60).toFormattedString()
           )
         )
       )

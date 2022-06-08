@@ -5,12 +5,17 @@ import practice.login.config.CookieConst
 import practice.login.domain.jsonWebToken.AuthTokenEntity
 import practice.login.domain.jsonWebToken.JsonWebToken
 import practice.login.domain.jsonWebToken.RefreshTokenEntity
+import practice.login.domain.user.UserId
+import practice.login.domain.user.UserRepository
 import javax.servlet.ServletRequest
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 
 @Service
-class JsonWebTokenFilterService() {
+class JsonWebTokenFilterService(
+  private val jsonWebTokenService: JsonWebTokenService,
+  private val userRepository: UserRepository
+) {
 
   fun getAuthTokenFromRequest(
     request: ServletRequest?
@@ -50,5 +55,18 @@ class JsonWebTokenFilterService() {
       } else null
 
     return refreshTokenEntity
+  }
+
+  fun getUserIdOrNull(
+    request: ServletRequest?
+  ): UserId? {
+
+    val authTokenEntity: AuthTokenEntity = getAuthTokenFromRequest(request) ?: return null
+    if (!authTokenEntity.token.isValid()) return null
+
+    val userId: UserId = authTokenEntity.token.getUserId() ?: return null
+    if (!userRepository.existByUserId(userId)) return null
+
+    return userId
   }
 }

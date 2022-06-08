@@ -32,14 +32,17 @@ class SignInUseCase(
 
   private fun isSignedIn(
     userId: UserId?
-  ): Boolean = userId != null
+  ): Boolean =
+    userId?.let { it ->
+      userRepository.existByUserId(it)
+    } == true
 
   fun signInForm(
     modelAndView: ModelAndView,
     userId: UserId?
   ): ModelAndView {
-
-    if (isSignedIn(userId = userId))
+    
+    if (isSignedIn(userId))
       return modelAndView.alreadySignedIn()
 
     return modelAndView.apply {
