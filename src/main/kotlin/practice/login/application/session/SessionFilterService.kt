@@ -1,4 +1,4 @@
-package practice.login.application.auth
+package practice.login.application.session
 
 import org.springframework.stereotype.Service
 import practice.login.config.CookieConst

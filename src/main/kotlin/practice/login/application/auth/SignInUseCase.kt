@@ -2,9 +2,11 @@ package practice.login.application.auth
 
 import org.springframework.stereotype.Service
 import org.springframework.web.servlet.ModelAndView
-import practice.login.domain.session.SessionId
-import practice.login.domain.session.SessionIdEntity
+import practice.login.application.jsonWebToken.JsonWebTokenService
+import practice.login.domain.jsonWebToken.AuthTokenEntity
+import practice.login.domain.jsonWebToken.RefreshTokenEntity
 import practice.login.domain.user.UserAccountName
+import practice.login.domain.user.UserId
 import practice.login.domain.user.UserPassword
 import practice.login.domain.user.UserRepository
 import practice.login.presentation.form.SignInForm
@@ -14,7 +16,7 @@ import javax.servlet.http.HttpServletResponse
 @Service
 class SignInUseCase(
   private val userRepository: UserRepository,
-  private val sessionService: SessionService
+  private val jsonWebTokenService: JsonWebTokenService
 ) {
 
   private fun ModelAndView.alreadySignedIn() = this.apply {
@@ -29,15 +31,15 @@ class SignInUseCase(
   }
 
   private fun isSignedIn(
-    sessionId: SessionId?
-  ): Boolean = sessionService.isSignedIn(sessionId) != null
+    userId: UserId?
+  ): Boolean = userId != null
 
   fun signInForm(
     modelAndView: ModelAndView,
-    sessionId: SessionId?
+    userId: UserId?
   ): ModelAndView {
 
-    if (isSignedIn(sessionId = sessionId))
+    if (isSignedIn(userId = userId))
       return modelAndView.alreadySignedIn()
 
     return modelAndView.apply {
@@ -49,12 +51,12 @@ class SignInUseCase(
   fun signIn(
     modelAndView: ModelAndView,
     response: HttpServletResponse,
-    sessionId: SessionId?,
+    userId: UserId?,
     signInForm: SignInForm
   ): ModelAndView {
 
     // Redirect if already signed in
-    if (isSignedIn(sessionId))
+    if (isSignedIn(userId))
       return modelAndView.alreadySignedIn()
 
     val accountName = UserAccountName.of(signInForm.accountName)
@@ -69,12 +71,13 @@ class SignInUseCase(
       if (!rawPassword.isCorrect(user.hashedPassword))
         return modelAndView.signInFailed(signInForm)
 
-      val sessionIdEntity: SessionIdEntity =
-        sessionService.createSessionId(userId = user.id)
-
-      sessionService.setSessionIdToResponse(
+      jsonWebTokenService.setAuthTokenToResponse(
         response = response,
-        sessionIdEntity = sessionIdEntity
+        authTokenEntity = AuthTokenEntity.new(user.id)
+      )
+      jsonWebTokenService.setRefreshTokenToResponse(
+        response = response,
+        refreshTokenEntity = RefreshTokenEntity.new(user.id)
       )
 
       // Redirect if sign in succeeded

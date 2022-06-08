@@ -1,7 +1,7 @@
 package practice.login.presentation.filter
 
 import org.springframework.stereotype.Component
-import practice.login.application.auth.SessionFilterService
+import practice.login.application.session.SessionFilterService
 import javax.servlet.Filter
 import javax.servlet.FilterChain
 import javax.servlet.ServletRequest
@@ -18,13 +18,15 @@ class SessionFilter(
     chain: FilterChain
   ) {
 
-    val sessionId = sessionFilterService.getSessionIdFromRequest(request)
+    // val sessionId = sessionFilterService.getSessionIdFromRequest(request)
 
     chain.doFilter(request, response)
 
+    /*
     sessionFilterService.upsertSessionId(
       response = response,
       sessionId = sessionId
     )
+    */
   }
 }

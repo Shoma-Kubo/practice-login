@@ -1,6 +1,5 @@
-package practice.login.application.auth
+package practice.login.application.session
 
-import org.springframework.http.ResponseCookie
 import org.springframework.stereotype.Service
 import practice.login.application.common.CookieService
 import practice.login.config.CookieConst
@@ -10,6 +9,7 @@ import practice.login.domain.session.SessionIdRepository
 import practice.login.domain.user.UserId
 import practice.login.utility.Utils.nullOnNotFound
 import practice.login.utility.Utils.toAge
+import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletResponse
 
 @Service
@@ -60,10 +60,9 @@ class SessionService(
     sessionIdEntity: SessionIdEntity
   ): SessionIdEntity {
 
-    val cookie: ResponseCookie.ResponseCookieBuilder =
-      ResponseCookie
-        .from(CookieConst.SESSION_ID_NAME, sessionIdEntity.sessionId.value)
-        .maxAge(sessionIdEntity.expireAt.value.toAge())
+    val cookie = Cookie(CookieConst.SESSION_ID_NAME, sessionIdEntity.sessionId.value)
+    cookie.maxAge = sessionIdEntity.expireAt.value.toAge()
+
     cookieService.addCookie(
       response,
       cookie

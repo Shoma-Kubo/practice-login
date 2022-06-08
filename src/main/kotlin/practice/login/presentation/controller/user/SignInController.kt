@@ -2,7 +2,6 @@ package practice.login.presentation.controller.user
 
 import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.CookieValue
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -10,9 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.ModelAndView
 import practice.login.application.auth.SignInUseCase
-import practice.login.config.CookieConst
-import practice.login.domain.session.SessionId
+import practice.login.config.HttpAttributeConst
+import practice.login.domain.user.UserId
 import practice.login.presentation.form.SignInForm
+import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.validation.Valid
 
@@ -27,23 +27,23 @@ class SignInController(
   @ResponseStatus(HttpStatus.OK)
   fun signInForm(
     modelAndView: ModelAndView,
-    @CookieValue(value = CookieConst.SESSION_ID_NAME, required = false) sessionId: SessionId?
+    request: HttpServletRequest
   ): ModelAndView = signInUseCase.signInForm(
     modelAndView = modelAndView,
-    sessionId = sessionId
+    userId = request.getAttribute(HttpAttributeConst.USER_ID_NAME)?.let { UserId.of(it.toString()) }
   )
 
   @PostMapping("/sign-in")
   @ResponseStatus(HttpStatus.OK)
   fun signIn(
     modelAndView: ModelAndView,
+    request: HttpServletRequest,
     response: HttpServletResponse,
-    @CookieValue(value = CookieConst.SESSION_ID_NAME, required = false) sessionId: SessionId?,
     @Valid signInForm: SignInForm
   ): ModelAndView = signInUseCase.signIn(
     modelAndView = modelAndView,
     response = response,
-    sessionId = sessionId,
+    userId = request.getAttribute(HttpAttributeConst.USER_ID_NAME)?.let { UserId.of(it.toString()) },
     signInForm = signInForm
   )
 }
