@@ -15,6 +15,6 @@ data class UserId private constructor(
     @JvmStatic
     fun of(value: String) = UserId(value)
 
-    fun new() = UserId(UUID.randomUUID().toBase64URLSafeString())
+    fun new() = UserId(UUID.randomUUID().toString().toBase64URLSafeString())
   }
 }

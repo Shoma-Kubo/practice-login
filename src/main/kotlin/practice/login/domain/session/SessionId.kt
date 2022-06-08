@@ -15,6 +15,6 @@ data class SessionId private constructor(
     @JvmStatic
     fun of(value: String) = SessionId(value)
 
-    fun new() = SessionId(UUID.randomUUID().toBase64URLSafeString())
+    fun new() = SessionId(UUID.randomUUID().toString().toBase64URLSafeString())
   }
 }
