@@ -24,8 +24,13 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
       // Permit all
       .mvcMatchers(
         "/",
-        "/signup",
-        "/signin"
+        /*
+        "/sign_up",
+        "/is_signed_in",
+        "/sign_in",
+        "/sign_out"
+        */
+        "/**"
       ).permitAll()
       .regexMatchers(
         HttpMethod.GET,

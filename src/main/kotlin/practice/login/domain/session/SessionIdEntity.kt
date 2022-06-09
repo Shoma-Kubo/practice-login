@@ -1,23 +1,31 @@
 package practice.login.domain.session
 
-import practice.login.utility.Utils.toBase64URLSafeString
-import java.time.LocalDateTime
-import java.util.*
+import practice.login.domain.user.UserId
 
 data class SessionIdEntity private constructor(
-  val sessionId: String,
-  val accountName: String,
-  val expireAt: LocalDateTime
+  val sessionId: SessionId,
+  val userId: UserId,
+  val expireAt: SessionIdExpireAt
 ) {
 
   companion object {
 
     fun new(
-      accountName: String,
+      userId: UserId,
     ) = SessionIdEntity(
-      sessionId = UUID.randomUUID().toBase64URLSafeString(),
-      accountName = accountName,
-      expireAt = LocalDateTime.now().plusMinutes(5)
+      sessionId = SessionId.new(),
+      userId = userId,
+      expireAt = SessionIdExpireAt.new()
+    )
+
+    fun of(
+      sessionId: SessionId,
+      userId: UserId,
+      expireAt: SessionIdExpireAt
+    ) = SessionIdEntity(
+      sessionId = sessionId,
+      userId = userId,
+      expireAt = expireAt
     )
   }
 }

@@ -6,5 +6,7 @@ interface UserRepository {
 
   fun updateProfile(user: UserEntity): UserEntity
 
-  fun findByAccountName(accountName: String): UserEntity
+  fun findByAccountName(accountName: UserAccountName): UserEntity
+
+  fun findAccountNameById(id: UserId): UserAccountName
 }

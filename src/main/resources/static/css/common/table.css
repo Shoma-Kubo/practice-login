@@ -1,0 +1,16 @@
+/* Layout */
+table {
+  width: 100%;
+  word-break: break-all;
+}
+table tr.label:not(:first-child) > td {
+  padding-top: var(--marginTableRow);
+}
+tr td:not(:first-child) {
+  padding-left: var(--marginTableColumn);
+}
+
+/* Label */
+table td.label {
+  width: 9em;
+}

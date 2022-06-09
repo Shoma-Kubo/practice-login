@@ -46,6 +46,7 @@ dependencies {
   /* Thymeleaf */
   implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
   implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
+  implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
 
   /* Lombok */
   compileOnly("org.projectlombok:lombok")

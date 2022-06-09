@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="jp" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta name="viewport" content="width=device-width">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+  <!-- CSS files -->
+  <link th:href="@{/css/common/const.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/common/button.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/common/layout.css}" rel="stylesheet" type="text/css">
+
+  <meta charset="UTF-8">
+  <title>Practice Login</title>
+</head>
+
+<body>
+
+<!-- Header -->
+<div class="header">
+
+  <a class="title" th:href="@{/}">Authentication Practice</a>
+
+  <!-- Header menu -->
+  <nav class="headerMenu">
+    <ul>
+      <!-- Show sign in options if unauthenticated -->
+      <li sec:authorize="!isAuthenticated()">
+        <form th:method="get" th:action="@{/sign-in}">
+          <div class="buttonBack" style="normal">
+            <input class="button" type="submit" style="normal" value="Sign in"></div>
+        </form>
+      </li>
+      <li sec:authorize="!isAuthenticated()">
+        <form th:method="get" th:action="@{/sign-up}">
+          <div class="buttonBack" style="alert">
+            <input class="button" type="submit" style="alert" value="Sign up"></div>
+        </form>
+      </li>
+      <!-- Show sign out option if authenticated -->
+      <li sec:authorize="!isAuthenticated()">
+        <form th:method="post" th:action="@{/sign-out}">
+          <div class="buttonBack" style="alert">
+            <input class="button" type="submit" style="alert" value="Sign out"></div>
+        </form>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<!-- Side Menu -->
+<button class="sideMenuButton"><i class="fas fa-bars"></i></button>
+<nav class="sideMenu">
+  <ul>
+    <li>
+      <div class="buttonBack" style="normal">
+        <a class="button" style="normal" th:href="@{/}">TOP</a></div>
+    </li>
+    <li>
+      <div class="buttonBack" style="normal">
+        <a class="button" style="normal" th:href="@{/mypage}">MY PAGE</a></div>
+    </li>
+    <li>
+      <div class="buttonBack" style="normal">
+        <a class="button" style="normal" th:href="@{#}">ARTICLES</a></div>
+    </li>
+  </ul>
+</nav>
+
+<!-- Main Contents -->
+<div class="content" layout:fragment="content"></div>
+
+</body>
+
+</html>
