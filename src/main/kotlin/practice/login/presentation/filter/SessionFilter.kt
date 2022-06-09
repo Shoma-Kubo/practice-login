@@ -1,32 +1,26 @@
 package practice.login.presentation.filter
 
 import org.springframework.stereotype.Component
+import org.springframework.web.filter.OncePerRequestFilter
 import practice.login.application.auth.SessionFilterService
-import javax.servlet.Filter
 import javax.servlet.FilterChain
-import javax.servlet.ServletRequest
-import javax.servlet.ServletResponse
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @Component
 class SessionFilter(
   private val sessionFilterService: SessionFilterService
-) : Filter {
+) : OncePerRequestFilter() {
 
-  override fun doFilter(
-    request: ServletRequest?,
-    response: ServletResponse?,
-    chain: FilterChain
-  ) {
+  override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
 
     val sessionId = sessionFilterService.getSessionIdFromRequest(request)
-    
-    chain.doFilter(request, response)
 
-    /*
+    filterChain.doFilter(request, response)
+
     sessionFilterService.upsertSessionId(
       response = response,
       sessionId = sessionId
     )
-     */
   }
 }
