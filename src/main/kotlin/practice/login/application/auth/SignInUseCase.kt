@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.servlet.ModelAndView
 import practice.login.domain.session.SessionId
 import practice.login.domain.session.SessionIdEntity
+import practice.login.domain.session.SessionIdRepository
 import practice.login.domain.user.UserAccountName
 import practice.login.domain.user.UserPassword
 import practice.login.domain.user.UserRepository
@@ -14,7 +15,8 @@ import javax.servlet.http.HttpServletResponse
 @Service
 class SignInUseCase(
   private val userRepository: UserRepository,
-  private val sessionService: SessionService
+  private val sessionService: SessionService,
+  private val sessionIdRepository: SessionIdRepository
 ) {
 
   private fun ModelAndView.alreadySignedIn() = this.apply {
@@ -52,7 +54,7 @@ class SignInUseCase(
     sessionId: SessionId?,
     signInForm: SignInForm
   ): ModelAndView {
-    
+
     // Redirect if already signed in
     if (isSignedIn(sessionId))
       return modelAndView.alreadySignedIn()
@@ -76,6 +78,8 @@ class SignInUseCase(
         response = response,
         sessionIdEntity = sessionIdEntity
       )
+
+      sessionIdRepository.deleteByUserId(sessionIdEntity.userId)
 
       // Redirect if sign in succeeded
       return modelAndView.alreadySignedIn()
