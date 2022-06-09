@@ -18,9 +18,9 @@ class SessionFilter(
 
     filterChain.doFilter(request, response)
 
-    sessionFilterService.upsertSessionId(
+    /*sessionFilterService.upsertSessionId(
       response = response,
       sessionId = sessionId
-    )
+    )*/
   }
 }

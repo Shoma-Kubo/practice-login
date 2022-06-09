@@ -18,7 +18,7 @@ class SessionFilterService(
     request: ServletRequest?
   ): SessionId? {
 
-    val cookies: Array<Cookie> = (request as HttpServletRequest).cookies
+    val cookies: Array<Cookie>? = (request as HttpServletRequest).cookies
 
     val sessionId: SessionId? =
       if (!cookies.isNullOrEmpty()) {
