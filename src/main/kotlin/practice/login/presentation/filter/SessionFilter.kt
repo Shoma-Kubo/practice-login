@@ -19,12 +19,14 @@ class SessionFilter(
   ) {
 
     val sessionId = sessionFilterService.getSessionIdFromRequest(request)
-
+    
     chain.doFilter(request, response)
 
+    /*
     sessionFilterService.upsertSessionId(
       response = response,
       sessionId = sessionId
     )
+     */
   }
 }

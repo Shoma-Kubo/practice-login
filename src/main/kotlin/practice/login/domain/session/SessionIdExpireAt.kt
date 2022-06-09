@@ -15,7 +15,7 @@ data class SessionIdExpireAt private constructor(
     @JvmStatic
     fun of(value: LocalDateTime) = SessionIdExpireAt(value)
 
-    fun new() = SessionIdExpireAt(LocalDateTime.now().plusMinutes(60))
+    fun new() = SessionIdExpireAt(LocalDateTime.now().plusMinutes(1))
   }
 
   fun hasExpired() = this.value < LocalDateTime.now()

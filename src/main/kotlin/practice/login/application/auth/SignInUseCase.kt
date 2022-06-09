@@ -52,7 +52,7 @@ class SignInUseCase(
     sessionId: SessionId?,
     signInForm: SignInForm
   ): ModelAndView {
-
+    
     // Redirect if already signed in
     if (isSignedIn(sessionId))
       return modelAndView.alreadySignedIn()

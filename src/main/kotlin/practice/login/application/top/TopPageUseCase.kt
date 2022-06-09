@@ -9,6 +9,7 @@ import practice.login.domain.session.SessionIdRepository
 import practice.login.domain.user.UserAccountName
 import practice.login.domain.user.UserId
 import practice.login.domain.user.UserRepository
+import practice.login.utility.Utils.nullOnNotFound
 import javax.servlet.http.HttpServletRequest
 
 @Service
@@ -24,18 +25,26 @@ class TopPageUseCase(
     request: HttpServletRequest
   ): ModelAndView {
 
-    val sessionId: SessionId? = sessionFilterService.getSessionIdFromRequest(request)
+    val sessionId: SessionId? =
+      nullOnNotFound {
+        sessionFilterService.getSessionIdFromRequest(request)
+      }
+
     val userId: UserId? = sessionService.isSignedIn(sessionId)
 
     val isSignedIn: Boolean = userId != null
     val userAccountName: UserAccountName? = userId?.let { userRepository.findAccountNameById(it) }
     val untilExpireSeconds: Long =
-      sessionId?.let { sessionIdRepository.findBySessionId(sessionId).expireAt.toUntilExpireSeconds() } ?: 0
+      sessionId?.let {
+        nullOnNotFound {
+          sessionIdRepository.findBySessionId(sessionId)
+        }?.expireAt?.toUntilExpireSeconds()
+      } ?: 0
 
     return modelAndView.apply {
       viewName = "top/top"
       addObject("is_signed_in", isSignedIn)
-      addObject("account_name", userAccountName)
+      addObject("account_name", userAccountName?.value)
       addObject("until_expire_seconds", untilExpireSeconds)
     }
   }
