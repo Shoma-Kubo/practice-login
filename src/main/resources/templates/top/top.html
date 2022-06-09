@@ -16,6 +16,12 @@
     <h1 class="title">TOP PAGE</h1>
   </div>
 
+  <div th:if="${is_signed_in}">
+    <h2>Hello <span color="red" th:text="${account_name}"></span>!</h2>
+    <br>
+    <p>Signed out in <span th:text="${until_expire_seconds}"></span> seconds.</p>
+  </div>
+
 </div>
 
 </body>

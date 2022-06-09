@@ -3,6 +3,7 @@ package practice.login.domain.session
 import org.seasar.doma.Domain
 import practice.login.domain.common.ValueObject
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 @Domain(valueType = LocalDateTime::class, factoryMethod = "of")
 data class SessionIdExpireAt private constructor(
@@ -18,4 +19,6 @@ data class SessionIdExpireAt private constructor(
   }
 
   fun hasExpired() = this.value < LocalDateTime.now()
+
+  fun toUntilExpireSeconds(): Long = ChronoUnit.SECONDS.between(LocalDateTime.now(), this.value)
 }

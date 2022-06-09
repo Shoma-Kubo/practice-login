@@ -7,6 +7,7 @@ import org.seasar.doma.Update
 import org.seasar.doma.boot.ConfigAutowireable
 import org.seasar.doma.jdbc.Result
 import practice.login.domain.user.UserAccountName
+import practice.login.domain.user.UserId
 
 @Dao
 @ConfigAutowireable
@@ -20,4 +21,7 @@ interface UserDao {
 
   @Select
   fun findByAccountName(accountName: UserAccountName): UserRecord?
+
+  @Select
+  fun findAccountNameById(id: UserId): UserAccountName?
 }
