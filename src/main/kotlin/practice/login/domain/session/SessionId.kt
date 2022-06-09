@@ -2,7 +2,7 @@ package practice.login.domain.session
 
 import org.seasar.doma.Domain
 import practice.login.domain.common.ValueObject
-import practice.login.utility.Utils.toBase64URLSafeString
+import practice.login.utility.Utils.toBase64URLSafeStringFromUUID
 import java.util.*
 
 @Domain(valueType = String::class, factoryMethod = "of")
@@ -15,6 +15,6 @@ data class SessionId private constructor(
     @JvmStatic
     fun of(value: String) = SessionId(value)
 
-    fun new() = SessionId(UUID.randomUUID().toString().toBase64URLSafeString())
+    fun new() = SessionId(UUID.randomUUID().toBase64URLSafeStringFromUUID())
   }
 }
