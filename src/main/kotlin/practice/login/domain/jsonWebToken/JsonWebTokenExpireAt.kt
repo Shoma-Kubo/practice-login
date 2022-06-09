@@ -4,6 +4,7 @@ import org.seasar.doma.Domain
 import practice.login.domain.common.ValueObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 @Domain(valueType = LocalDateTime::class, factoryMethod = "of")
 data class JsonWebTokenExpireAt private constructor(
@@ -27,4 +28,6 @@ data class JsonWebTokenExpireAt private constructor(
   fun hasExpired() = this.value < LocalDateTime.now()
 
   fun toFormattedString() = this.value.format(FORMAT)
+
+  fun toUntilExpireSeconds(): Long = ChronoUnit.SECONDS.between(LocalDateTime.now(), this.value)
 }

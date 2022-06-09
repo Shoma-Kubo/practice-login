@@ -24,6 +24,7 @@ class TopPageController(
     request: HttpServletRequest
   ): ModelAndView = topPageUseCase.top(
     modelAndView = modelAndView,
+    request = request,
     userId = request.getAttribute(HttpAttributeConst.USER_ID_NAME)?.let { UserId.of(it.toString()) }
   )
 }
