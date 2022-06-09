@@ -71,6 +71,8 @@ class SignInUseCase(
       if (!rawPassword.isCorrect(user.hashedPassword))
         return modelAndView.signInFailed(signInForm)
 
+      sessionIdRepository.deleteByUserId(user.id)
+
       val sessionIdEntity: SessionIdEntity =
         sessionService.createSessionId(userId = user.id)
 
@@ -78,8 +80,6 @@ class SignInUseCase(
         response = response,
         sessionIdEntity = sessionIdEntity
       )
-
-      sessionIdRepository.deleteByUserId(sessionIdEntity.userId)
 
       // Redirect if sign in succeeded
       return modelAndView.alreadySignedIn()
